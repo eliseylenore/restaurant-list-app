@@ -80,6 +80,24 @@ namespace RestaurantListApp
       Assert.Equal(testCuisine, foundCuisine);
     }
 
+    [Fact]
+   public void Test_GetRestaurant_RetrievesAllRestaurantsWithCuisine()
+   {
+     Cuisine testCuisine = new Cuisine("mexican");
+     testCuisine.Save();
+
+     Restaurant firstRestaurant = new Restaurant("Larry's Tacos", 3, "Bend", testCuisine.GetId());
+     firstRestaurant.Save();
+     Restaurant secondRestaurant = new Restaurant("Brandon's Burritos", 2, "Mill Creek", testCuisine.GetId());
+     secondRestaurant.Save();
+
+
+     List<Restaurant> testRestaurantList = new List<Restaurant> {firstRestaurant, secondRestaurant};
+     List<Restaurant> resultRestaurantList = testCuisine.GetRestaurants();
+
+     Assert.Equal(testRestaurantList, resultRestaurantList);
+   }
+
     public void Dispose()
     {
       Restaurant.DeleteAll();
