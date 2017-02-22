@@ -10,13 +10,15 @@ namespace RestaurantListApp
         private string _name;
         private int _rating;
         private string _city;
+        private int _cuisineId;
 
-        public Restaurant(string Name, int Rating, string City, int Id = 0)
+        public Restaurant(string Name, int Rating, string City, int CuisineId, int Id = 0)
         {
             _id = Id;
             _name = Name;
             _rating = Rating;
             _city = City;
+            _cuisineId = CuisineId;
         }
         public override bool Equals(System.Object otherRestaurant)
         {
@@ -31,7 +33,8 @@ namespace RestaurantListApp
                 bool nameEquality = (this.GetName() == newRestaurant.GetName());
                 bool ratingEquality = (this.GetRating() == newRestaurant.GetRating());
                 bool cityEquality = (this.GetCity() == newRestaurant.GetCity());
-                return (idEquality && nameEquality && ratingEquality && cityEquality);
+                bool cuisineEquality = this.GetCuisineId() == newTask.GetCuisineId();
+                return (idEquality && nameEquality && ratingEquality && cityEquality && cuisineEquality);
             }
         }
         public override int GetHashCode()
@@ -72,6 +75,12 @@ namespace RestaurantListApp
         {
             _city = newCity;
         }
+
+        public int GetCuisineId()
+        {
+            return _cuisineId;
+        }
+
         public static void DeleteAll()
         {
             SqlConnection conn = DB.Connection();
@@ -85,7 +94,7 @@ namespace RestaurantListApp
             SqlConnection conn = DB.Connection();
             conn.Open();
 
-            SqlCommand cmd = new SqlCommand("INSERT INTO restaurants (name, rating, city) OUTPUT INSERTED.id VALUES (@RestaurantName, @RestaurantRating, @RestaurantCity);", conn);
+            SqlCommand cmd = new SqlCommand("INSERT INTO restaurants (name, rating, city, cuisineId) OUTPUT INSERTED.id VALUES (@RestaurantName, @RestaurantRating, @RestaurantCity, @RestaurantCuisineId);", conn);
 
             SqlParameter nameParameter = new SqlParameter();
             nameParameter.ParameterName = "@RestaurantName";
@@ -101,6 +110,11 @@ namespace RestaurantListApp
             cityParameter.ParameterName = "@RestaurantCity";
             cityParameter.Value = this.GetCity();
             cmd.Parameters.Add(cityParameter);
+
+            SqlParameter cuisineIdParameter = new SqlParameter();
+            cuisineIdParameter.ParameterName = "@RestaurantCuisineId";
+            cuisineIdParameter.Value = this.GetCuisineId();
+            cmd.Parameters.Add(cuisineIdParameter);
 
 
             SqlDataReader rdr = cmd.ExecuteReader();
@@ -134,7 +148,8 @@ namespace RestaurantListApp
                 string restaurantName = rdr.GetString(1);
                 int restaurantRating = rdr.GetInt32(2);
                 string restaurantCity = rdr.GetString(3);
-                Restaurant newRestaurant = new Restaurant(restaurantName, restaurantRating, restaurantCity, restaurantId);
+                int restaurantCuisineId = rdr.GetInt32(4);
+                Restaurant newRestaurant = new Restaurant(restaurantName, restaurantRating, restaurantCity, restaurantCuisineId, restaurantId);
                 allRestaurants.Add(newRestaurant);
             }
 
@@ -167,14 +182,16 @@ namespace RestaurantListApp
             string foundRestaurantName = null;
             int foundRestaurantRating = 0;
             string foundRestaurantCity = null;
+            int foundRestaurantCuisineId = 0;
             while(rdr.Read())
             {
                 foundRestaurantId = rdr.GetInt32(0);
                 foundRestaurantName = rdr.GetString(1);
                 foundRestaurantRating = rdr.GetInt32(2);
                 foundRestaurantCity = rdr.GetString(3);
+                foundRestaurantCuisineId = rdr.GetInt32(4);
             }
-            Restaurant foundRestaurant = new Restaurant(foundRestaurantName, foundRestaurantRating, foundRestaurantCity, foundRestaurantId);
+            Restaurant foundRestaurant = new Restaurant(foundRestaurantName, foundRestaurantRating, foundRestaurantCity, foundRestaurantCuisineId, foundRestaurantId);
 
             if (rdr != null)
             {

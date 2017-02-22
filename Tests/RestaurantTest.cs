@@ -27,8 +27,8 @@ namespace RestaurantListApp
         public void Test_Equal_ReturnsTrueIfParametersAreTheSame()
         {
             //Arrange, Act
-            Restaurant firstRestaurant = new Restaurant("Tony's", 5, "Sicily");
-            Restaurant secondRestaurant = new Restaurant("Tony's", 5, "Sicily");
+            Restaurant firstRestaurant = new Restaurant("Tony's", 5, "Sicily", 1);
+            Restaurant secondRestaurant = new Restaurant("Tony's", 5, "Sicily", 1);
 
             //Assert
             Assert.Equal(firstRestaurant, secondRestaurant);
@@ -38,7 +38,7 @@ namespace RestaurantListApp
         public void Test_Save_SavesToDatabase()
         {
             //Arrange
-            Restaurant testRestaurant = new Restaurant("Tony's", 5, "Sicily");
+            Restaurant testRestaurant = new Restaurant("Tony's", 5, "Sicily", 1);
 
             //Act
             testRestaurant.Save();
@@ -58,7 +58,7 @@ namespace RestaurantListApp
         public void Test_Save_AssignsIdToObject()
         {
             //Arrange
-            Restaurant testRestaurant = new Restaurant("Tony's", 5, "Sicily");
+            Restaurant testRestaurant = new Restaurant("Tony's", 5, "Sicily", 1);
 
             //Act
             testRestaurant.Save();
@@ -75,7 +75,7 @@ namespace RestaurantListApp
         public void Test_Find_FindsRestaurantInDatabase()
         {
             //Arrange
-            Restaurant testRestaurant = new Restaurant("Tony's", 5, "Sicily");
+            Restaurant testRestaurant = new Restaurant("Tony's", 5, "Sicily", 1);
             testRestaurant.Save();
 
             //Act
