@@ -39,7 +39,11 @@ namespace RestaurantListApp
             };
             Post["/restaurants/delete"] = _ => {
                 Restaurant.DeleteAll();
-                return View["cleared.cshtml"];
+                return View["restaurants_cleared.cshtml"];
+            };
+            Post["/cuisines/delete"] = _ => {
+                Cuisine.DeleteAll();
+                return View["cuisines_cleared.cshtml"];
             };
             Get["/cuisines/{id}"] = parameters => {
                 Dictionary<string, object> model = new Dictionary<string, object>();
@@ -56,6 +60,15 @@ namespace RestaurantListApp
             Patch["cuisine/edit/{id}"] = parameters => {
                 Cuisine SelectedCuisine = Cuisine.Find(parameters.id);
                 SelectedCuisine.Update(Request.Form["cuisine-name"]);
+                return View["success.cshtml"];
+            };
+            Get["cuisines/delete/{id}"] = parameters => {
+                Cuisine SelectedCuisine = Cuisine.Find(parameters.id);
+                return View["cuisine_delete.cshtml", SelectedCuisine];
+            };
+            Delete["cuisines/delete/{id}"] = parameters => {
+                Cuisine SelectedCuisine = Cuisine.Find(parameters.id);
+                SelectedCuisine.Delete();
                 return View["success.cshtml"];
             };
         }
