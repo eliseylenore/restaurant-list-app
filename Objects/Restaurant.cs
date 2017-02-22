@@ -27,11 +27,11 @@ namespace RestaurantListApp
             else
             {
                 Restaurant newRestaurant = (Restaurant) otherRestaurant;
-                // bool idEquality = this.GetId() == newRestaurant.GetId();
+                bool idEquality = this.GetId() == newRestaurant.GetId();
                 bool nameEquality = (this.GetName() == newRestaurant.GetName());
                 bool ratingEquality = (this.GetRating() == newRestaurant.GetRating());
                 bool cityEquality = (this.GetCity() == newRestaurant.GetCity());
-                return ( nameEquality && ratingEquality && cityEquality);
+                return (idEquality && nameEquality && ratingEquality && cityEquality);
             }
         }
         public override int GetHashCode()

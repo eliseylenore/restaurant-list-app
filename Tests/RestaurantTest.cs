@@ -53,5 +53,22 @@ namespace RestaurantListApp
         {
             Restaurant.DeleteAll();
         }
+
+        [Fact]
+        public void Test_Save_AssignsIdToObject()
+        {
+            //Arrange
+            Restaurant testRestaurant = new Restaurant("Tony's", 5, "Sicily");
+
+            //Act
+            testRestaurant.Save();
+            Restaurant savedRestaurant = Restaurant.GetAll()[0];
+
+            int result = savedRestaurant.GetId();
+            int testId = testRestaurant.GetId();
+
+            //Assert
+            Assert.Equal(testId, result);
+        }
     }
 }
