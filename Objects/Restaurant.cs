@@ -33,7 +33,7 @@ namespace RestaurantListApp
                 bool nameEquality = (this.GetName() == newRestaurant.GetName());
                 bool ratingEquality = (this.GetRating() == newRestaurant.GetRating());
                 bool cityEquality = (this.GetCity() == newRestaurant.GetCity());
-                bool cuisineEquality = this.GetCuisineId() == newTask.GetCuisineId();
+                bool cuisineEquality = this.GetCuisineId() == newRestaurant.GetCuisineId();
                 return (idEquality && nameEquality && ratingEquality && cityEquality && cuisineEquality);
             }
         }
@@ -94,7 +94,7 @@ namespace RestaurantListApp
             SqlConnection conn = DB.Connection();
             conn.Open();
 
-            SqlCommand cmd = new SqlCommand("INSERT INTO restaurants (name, rating, city, cuisineId) OUTPUT INSERTED.id VALUES (@RestaurantName, @RestaurantRating, @RestaurantCity, @RestaurantCuisineId);", conn);
+            SqlCommand cmd = new SqlCommand("INSERT INTO restaurants (name, rating, city, cuisine_id) OUTPUT INSERTED.id VALUES (@RestaurantName, @RestaurantRating, @RestaurantCity, @RestaurantCuisineId);", conn);
 
             SqlParameter nameParameter = new SqlParameter();
             nameParameter.ParameterName = "@RestaurantName";
