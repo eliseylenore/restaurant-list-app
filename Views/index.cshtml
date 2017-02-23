@@ -4,43 +4,49 @@
 <div class="container">
   <nav class="navbar navbar-default">
     <div class="container-fluid">
-      <!-- Brand and toggle get grouped for better mobile display -->
+
       <div class="navbar-header">
         <a class="navbar-brand" href="#">Restaurant Tracker</a>
       </div>
 
-      <!-- Collect the nav links, forms, and other content for toggling -->
+
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav navbar-right">
-          <li class="new-restaurant"><a href="">Add a restaurant<span class="sr-only">(current)</span></a></li>
-          <li><a href="/cuisines/new">Add a category</a></li>
+          <li class="new-restaurant"><a href="#">Add a restaurant<span class="sr-only">(current)</span></a></li>
+          <li class="new-cuisine"><a href="#">Add a category</a></li>
           <li><a href="/restaurants">View existing restaurant list</a></li>
         </ul>
-      </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
+      </div>
+    </div>
   </nav>
 
+  <div class="category-form">
+    <form action="/" method="post">
+      <label for="cuisine-name">Category name</label>
+      <input id="cuisine-name" name="cuisine-name" type="text">
+      <button type="submit">Add</button>
+    </form>
+  </div>
 
 
-
-    <div class="restaurant-form">
-      <h1>Add a new restaurant</h1>
-      <form action="/restaurants/new" method="post">
-        <label for="restaurant-name">Restaurant name:</label>
-        <input id="restaurant-name" name="restaurant-name" type="text">
-        <label for="restaurant-rating">Restaurant rating (1-5):</label>
-        <input id="restaurant-rating" name="restaurant-rating" type="number">
-        <label for="restaurant-city">Restaurant city:</label>
-        <input id="restaurant-city" name="restaurant-city" type="text">
-        <select name="cuisine-id">
-          @foreach (var cuisine in Model["cuisines"])
-          {
-            <option value="@cuisine.GetId()">@cuisine.GetName()</option>
-          }
-        </select>
-        <button type="submit">Add new restaurant</button>
-      </form>
-    </div>
+  <div class="restaurant-form">
+    <h1>Add a new restaurant</h1>
+    <form action="/" method="post">
+      <label for="restaurant-name">Restaurant name:</label>
+      <input id="restaurant-name" name="restaurant-name" type="text">
+      <label for="restaurant-rating">Restaurant rating (1-5):</label>
+      <input id="restaurant-rating" name="restaurant-rating" type="number">
+      <label for="restaurant-city">Restaurant city:</label>
+      <input id="restaurant-city" name="restaurant-city" type="text">
+      <select name="cuisine-id">
+        @foreach (var cuisine in Model["cuisines"])
+        {
+          <option value="@cuisine.GetId()">@cuisine.GetName()</option>
+        }
+      </select>
+      <button type="submit">Add new restaurant</button>
+    </form>
+  </div>
 
 
 
@@ -54,22 +60,22 @@
       @foreach (var cuisine in Model["cuisines"])
       {
         <li>
-            <a href="/cuisines/@cuisine.GetId()">@cuisine.GetName()</a>
-            <a href="/cuisine/edit/@cuisine.GetId()">Edit</a>
-            <a href="/cuisines/delete/@cuisine.GetId()">Delete</a>
+        <a href="/cuisines/@cuisine.GetId()">@cuisine.GetName()</a>
+        <a href="/cuisine/edit/@cuisine.GetId()">Edit</a>
+        <a href="/cuisines/delete/@cuisine.GetId()">Delete</a>
         </li>
       }
-      <h4><a href="/cuisines/new">Add a new category</a></h4>
+      <h4 class="new-cuisine"><a href="/new">Add a new category</a></h4>
     }
     else
     {
       <h1>No categories have been created yet!</h1>
       <h4><a href="/cuisines/new">Would you like to add a new category?</a></h4>
     }
-  </ul>
+    </ul>
 
 
-  <form action="/cuisines/delete" method="post">
+    <form action="/cuisines/delete" method="post">
     <button type="submit">Clear all cuisines</button>
-  </form>
-</div>
+    </form>
+    </div>

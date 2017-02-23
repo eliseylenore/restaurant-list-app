@@ -9,6 +9,24 @@ namespace RestaurantListApp
     public HomeModule()
     {
       Get["/"] = _ => {
+        Dictionary<string, object> model = new Dictionary<string, object>();
+        var AllCuisines = Cuisine.GetAll();
+        var AllRestaurants = Restaurant.GetAll();
+        model.Add("cuisines", AllCuisines);
+        model.Add("restaurants", AllRestaurants);
+        return View["index.cshtml", model];
+      };
+      Post["/"] = _ => {
+        if (Request.Form["restaurant-name"] == null)
+        {
+          Cuisine newCuisine = new Cuisine(Request.Form["cuisine-name"]);
+          newCuisine.Save();
+        }
+        else
+        {
+            Restaurant newRestaurant = new Restaurant(Request.Form["restaurant-name"], Request.Form["restaurant-rating"], Request.Form["restaurant-city"], Request.Form["cuisine-id"]);
+            newRestaurant.Save();
+        }
 
         Dictionary<string, object> model = new Dictionary<string, object>();
         var AllCuisines = Cuisine.GetAll();
@@ -17,6 +35,16 @@ namespace RestaurantListApp
         model.Add("restaurants", AllRestaurants);
         return View["index.cshtml", model];
       };
+      // Post["/"] = _ => {
+      //   Cuisine newCuisine = new Cuisine(Request.Form["cuisine-name"]);
+      //   newCuisine.Save();
+      //   Dictionary<string, object> model = new Dictionary<string, object>();
+      //   var AllCuisines = Cuisine.GetAll();
+      //   var AllRestaurants = Restaurant.GetAll();
+      //   model.Add("cuisines", AllCuisines);
+      //   model.Add("restaurants", AllRestaurants);
+      //   return View["index.cshtml", model];
+      // };
       Get["/restaurants"] = _ => {
         List<Restaurant> AllRestaurants = Restaurant.GetAll();
         return View["restaurants.cshtml", AllRestaurants];
@@ -29,8 +57,7 @@ namespace RestaurantListApp
         return View["cuisine_form.cshtml"];
       };
       Post["/cuisines/new"] = _ => {
-        Cuisine newCuisine = new Cuisine(Request.Form["cuisine-name"]);
-        newCuisine.Save();
+
         return View["success.cshtml"];
       };
       Get["/restaurants/new"] = _ => {
@@ -39,14 +66,14 @@ namespace RestaurantListApp
         var AllRestaurants = Restaurant.GetAll();
         model.Add("cuisines", AllCuisines);
         model.Add("restaurants", AllRestaurants);
-        return View["restaurants_form.cshtml", model];
+        return View["/"];
       };
-      Post["/restaurants/new"] = _ => {
-        Restaurant newRestaurant = new Restaurant(Request.Form["restaurant-name"], Request.Form["restaurant-rating"], Request.Form["restaurant-city"], Request.Form["cuisine-id"]);
-        List<Restaurant> AllRestaurants = Restaurant.GetAll();
-        newRestaurant.Save();
-        return View["success.cshtml", AllRestaurants];
-      };
+      // Post["/restaurants/new"] = _ => {
+      //   Restaurant newRestaurant = new Restaurant(Request.Form["restaurant-name"], Request.Form["restaurant-rating"], Request.Form["restaurant-city"], Request.Form["cuisine-id"]);
+      //   List<Restaurant> AllRestaurants = Restaurant.GetAll();
+      //   newRestaurant.Save();
+      //   return View["success.cshtml", AllRestaurants];
+      // };
       Post["/restaurants/delete"] = _ => {
         Restaurant.DeleteAll();
         return View["restaurants_cleared.cshtml"];
