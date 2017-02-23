@@ -1,3 +1,10 @@
-body {
-    background-color: #ff5b5b;
+
+
+.navbar-default {
+  background-color: #ff5b5b;
+  color: white;
+}
+
+.navbar-default .navbar-brand, .navbar-default .navbar-nav>li>a {
+  color: white;
 }

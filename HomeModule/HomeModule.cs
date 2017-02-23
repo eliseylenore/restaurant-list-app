@@ -16,10 +16,10 @@ namespace RestaurantListApp
                 List<Restaurant> AllRestaurants = Restaurant.GetAll();
                 return View["restaurants.cshtml", AllRestaurants];
             };
-            Get["/cuisines"] = _ => {
-                List<Cuisine> AllCuisines = Cuisine.GetAll();
-                return View["cuisines.cshtml", AllCuisines];
-            };
+            // Get["/cuisines"] = _ => {
+            //     List<Cuisine> AllCuisines = Cuisine.GetAll();
+            //     return View["cuisines.cshtml", AllCuisines];
+            // };
             Get["/cuisines/new"] = _ => {
                 return View["cuisine_form.cshtml"];
             };

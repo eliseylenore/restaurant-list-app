@@ -1,31 +1,46 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-        <link href="../Content/css/styles.css" rel="stylesheet" type="text/css">
-    </head>
-    <body>
-        <div class="container">
-            <nav class="navbar navbar-default">
-                <div class="container-fluid">
-                    <!-- Brand and toggle get grouped for better mobile display -->
-                    <div class="navbar-header">
-                        <a class="navbar-brand" href="#">Restaurant Tracker</a>
-                    </div>
+@{
+  Layout="Shared/_Layout.cshtml";
+}
+<div class="container">
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Restaurant Tracker</a>
+      </div>
 
-                    <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><a href="#">Add a restaurant<span class="sr-only">(current)</span></a></li>
-                            <li><a href="#">Add a category</a></li>
-                            <li><a href="#">View existing restaurant list</a></li>
-                        </ul>
-                    </div><!-- /.navbar-collapse -->
-                </div><!-- /.container-fluid -->
-            </nav>
-            <h1>Restaurant Choices</h1>
-            <h4><a href="/cuisines">View Cuisines</a></h4>
-            <h4><a href="/restaurants">View Restuarants</a></h4>
-        </div>
-    </body>
-</html>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#">Add a restaurant<span class="sr-only">(current)</span></a></li>
+          <li><a href="#">Add a category</a></li>
+          <li><a href="#">View existing restaurant list</a></li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+  <h4><a href="/cuisines">View Cuisines</a></h4>
+  <h4><a href="/restaurants">View Restuarants</a></h4>
+
+  @* cuisines list *@
+  <h2>Categories:</h2>
+  <ul>
+    @if (Model.Count != 0)
+    {
+      @foreach (var cuisine in Model)
+      {
+        <li>
+            <a href="/cuisines/@cuisine.GetId()">@cuisine.GetName()</a>
+            <a href="/cuisine/edit/@cuisine.GetId()">Edit</a>
+            <a href="/cuisines/delete/@cuisine.GetId()">Delete</a>
+        </li>
+      }
+    }
+  </ul>
+  <h4><a href="/cuisines/new">Add a new cuisine</a></h4>
+  <h4><a href="/">Return home</a></h4>
+
+  <form action="/cuisines/delete" method="post">
+    <button type="submit">Clear all cuisines</button>
+  </form>
+</div>
