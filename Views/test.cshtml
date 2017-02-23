@@ -1,6 +1,6 @@
 <div class="restaurantForm">
   <h1>Add a new restaurant</h1>
-  <form action="/restaurants/new" method="post">
+  <form action="/">
     <label for="restaurant-name">Restaurant name:</label>
     <input id="restaurant-name" name="restaurant-name" type="text">
     <label for="restaurant-rating">Restaurant rating (1-5):</label>
@@ -16,25 +16,3 @@
     <button type="submit">Add new restaurant</button>
   </form>
 </div>
-
-@if (@Model.Count == 0)
-{
-  <p>No restaurants have been added yet!</p>
-}
-else
-{
-  <h1>Here is your list of restaurants:</h1>
-  <ul>
-    @foreach (var restaurant in Model["restaurants"])
-    {
-      <li>@restaurant.GetName()</li>
-      <li>@restaurant.GetRating()</li>
-      <li>@restaurant.GetCity()</li>
-    }
-  </ul>
-  <form action="/restaurants/delete" method="post">
-    <button type="submit">Clear all restaurants</button>
-  </form>
-}
-<p><a href="/restaurants/new">Add a new restaurant</a></p>
-<p><a href="/">Return home</a></p>

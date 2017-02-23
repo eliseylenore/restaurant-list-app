@@ -8,3 +8,7 @@
 .navbar-default .navbar-brand, .navbar-default .navbar-nav>li>a {
   color: white;
 }
+
+.restaurant-form {
+  display: none;
+}
